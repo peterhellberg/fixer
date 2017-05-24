@@ -5,7 +5,7 @@
 [![GoDoc](https://img.shields.io/badge/godoc-reference-blue.svg?style=flat)](https://godoc.org/github.com/peterhellberg/fixer)
 [![License MIT](https://img.shields.io/badge/license-MIT-lightgrey.svg?style=flat)](https://github.com/peterhellberg/fixer#license-mit)
 
-Go client for the [Foreign exchange rates and currency conversion API](http://fixer.io/)
+Go client for [Fixer.io](http://fixer.io/) (Foreign exchange rates and currency conversion API)
 
 ## Installation
 
