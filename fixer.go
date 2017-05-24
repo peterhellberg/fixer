@@ -2,6 +2,8 @@ package fixer
 
 import (
 	"encoding/json"
+	"sort"
+	"strings"
 	"time"
 )
 
@@ -41,6 +43,21 @@ type Response struct {
 	Date  Date     `json:"date"`
 	Rates Rates    `json:"rates"`
 	Links Links    `json:"links,omitempty"`
+}
+
+// Currencies is a slice of Currency
+type Currencies []Currency
+
+func (cs Currencies) String() string {
+	symbols := []string{}
+
+	for _, c := range cs {
+		symbols = append(symbols, string(c))
+	}
+
+	sort.Strings(symbols)
+
+	return strings.Join(symbols, ",")
 }
 
 // Currency is the type used for ISO 4217 Currency codes
