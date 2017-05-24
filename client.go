@@ -7,7 +7,6 @@ import (
 	"io/ioutil"
 	"net/http"
 	"net/url"
-	"strings"
 	"time"
 )
 
@@ -63,18 +62,24 @@ func UserAgent(ua string) func(*Client) {
 
 // Base sets the base query variable based on a Currency
 func Base(c Currency) url.Values {
-	return url.Values{"base": {string(c)}}
+	v := url.Values{}
+
+	if s := string(c); s != "" {
+		v.Set("base", s)
+	}
+
+	return v
 }
 
 // Symbols sets the symbols query variable based on the provided currencies
-func Symbols(currencies ...Currency) url.Values {
-	symbols := []string{}
+func Symbols(cs ...Currency) url.Values {
+	v := url.Values{}
 
-	for _, c := range currencies {
-		symbols = append(symbols, string(c))
+	if s := Currencies(cs).String(); s != "" {
+		v.Set("symbols", s)
 	}
 
-	return url.Values{"symbols": {strings.Join(symbols, ",")}}
+	return v
 }
 
 // Latest foreign exchange reference rates
