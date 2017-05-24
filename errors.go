@@ -19,11 +19,17 @@ func (e *Error) Error() string {
 
 // Errors
 var (
+	ErrNilResponse         = NewError("Unexpected nil response")
+	ErrUnexpectedStatus    = NewError("Unexpected status")
 	ErrNotFound            = NewError(http.StatusText(http.StatusNotFound))
 	ErrUnprocessableEntity = NewError(http.StatusText(http.StatusUnprocessableEntity))
 )
 
 func responseError(resp *http.Response) error {
+	if resp == nil {
+		return ErrNilResponse
+	}
+
 	switch resp.StatusCode {
 	case http.StatusOK:
 		return nil
@@ -32,6 +38,6 @@ func responseError(resp *http.Response) error {
 	case http.StatusUnprocessableEntity:
 		return ErrUnprocessableEntity
 	default:
-		return NewError("Unexpected status: " + resp.Status)
+		return ErrUnexpectedStatus
 	}
 }
