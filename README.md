@@ -11,6 +11,117 @@ Go client for [Fixer.io](http://fixer.io/) (Foreign exchange rates and currency 
 
     go get -u github.com/peterhellberg/fixer
 
+## Usage examples
+
+**SEK quoted against USD and EUR**
+
+```go
+package main
+
+import (
+	"context"
+	"encoding/json"
+	"os"
+
+	"github.com/peterhellberg/fixer"
+)
+
+func main() {
+	f := fixer.NewClient()
+
+	resp, err := f.Latest(context.Background(),
+		fixer.Base(fixer.SEK),
+		fixer.Symbols(
+			fixer.USD,
+			fixer.EUR,
+		),
+	)
+	if err != nil {
+		return
+	}
+
+	encode(resp)
+}
+
+func encode(v interface{}) {
+	enc := json.NewEncoder(os.Stdout)
+	enc.SetEscapeHTML(false)
+	enc.SetIndent("", " ")
+	enc.Encode(v)
+}
+```
+
+```json
+{
+ "base": "SEK",
+ "date": "2017-05-24T00:00:00Z",
+ "rates": {
+  "EUR": 0.10265,
+  "USD": 0.1149
+ },
+ "links": {
+  "base": "https://api.fixer.io",
+  "self": "https://api.fixer.io/latest?base=SEK&symbols=EUR%2CUSD"
+ }
+}
+```
+
+**Using [goexrates](http://goexrates.mikolajczakluq.com/) instead**
+
+```go
+package main
+
+import (
+	"context"
+	"encoding/json"
+	"os"
+	"time"
+
+	"github.com/peterhellberg/fixer"
+)
+
+func main() {
+	f := fixer.NewClient(
+		fixer.BaseURL("http://exr.mikolajczakluq.com"),
+	)
+
+	resp, err := f.Date(context.Background(), time.Now(),
+		fixer.Base(fixer.GBP),
+		fixer.Symbols(
+			fixer.SEK,
+			fixer.NOK,
+		),
+	)
+	if err != nil {
+		return
+	}
+
+	encode(resp)
+}
+
+func encode(v interface{}) {
+	enc := json.NewEncoder(os.Stdout)
+	enc.SetEscapeHTML(false)
+	enc.SetIndent("", " ")
+	enc.Encode(v)
+}
+```
+
+```json
+{
+ "base": "GBP",
+ "date": "2017-05-24T00:00:00Z",
+ "rates": {
+  "NOK": 10.86901,
+  "SEK": 11.28307
+ },
+ "links": {
+  "base": "http://exr.mikolajczakluq.com",
+  "self": "http://exr.mikolajczakluq.com/2017-05-25?base=GBP&symbols=NOK%2CSEK"
+ }
+}
+```
+
 ## API documentation
 
 <http://fixer.io/>
