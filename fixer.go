@@ -1,3 +1,49 @@
+/*
+
+Package fixer contains a client for the
+Foreign exchange rates and currency conversion API
+
+Installation
+
+    go get -u github.com/peterhellberg/fixer
+
+Usage
+
+A small usage example
+
+      package main
+
+      import (
+      	"context"
+      	"flag"
+      	"fmt"
+
+      	"github.com/peterhellberg/fixer"
+      )
+
+      func main() {
+      	f := flag.String("from", "EUR", "")
+      	t := flag.String("to", "SEK", "")
+      	n := flag.Float64("n", 1, "")
+
+      	flag.Parse()
+
+      	from, to := fixer.Currency(*f), fixer.Currency(*t)
+
+      	resp, err := fixer.Latest(context.Background(),
+      		fixer.Base(from), fixer.Symbols(to),
+      	)
+
+      	if err == nil {
+      		fmt.Printf("%.2f %s equals %.2f %s\n", *n, from, resp.Rates[to]**n, to)
+      	}
+      }
+
+API Documentation
+
+http://fixer.io/
+
+*/
 package fixer
 
 import (
