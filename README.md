@@ -81,7 +81,7 @@ import (
 func main() {
 	f := fixer.ExratesClient
 
-  resp, err := f.At(context.Background(), time.Now(),
+	resp, err := f.At(context.Background(), time.Now(),
 		fixer.Base(fixer.GBP),
 		fixer.Symbols(
 			fixer.SEK,
