@@ -10,8 +10,14 @@ import (
 	"time"
 )
 
+// FixerClient is a client configured to use https://api.fixer.io
+var FixerClient = NewClient()
+
+// ExratesClient is a client configured to use http://exr.mikolajczakluq.com
+var ExratesClient = NewClient(BaseURL("http://exr.mikolajczakluq.com"))
+
 // DefaultClient is the default client for the Foreign exchange rates and currency conversion API
-var DefaultClient = NewClient()
+var DefaultClient = FixerClient
 
 // Client for the Foreign exchange rates and currency conversion API
 type Client struct {
