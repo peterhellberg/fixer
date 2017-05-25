@@ -10,6 +10,9 @@ import (
 	"time"
 )
 
+// DefaultClient is the default client for the Foreign exchange rates and currency conversion API
+var DefaultClient = NewClient()
+
 // Client for the Foreign exchange rates and currency conversion API
 type Client struct {
 	httpClient *http.Client
@@ -87,8 +90,8 @@ func (c *Client) Latest(ctx context.Context, attributes ...url.Values) (*Respons
 	return c.get(ctx, "/latest", c.query(attributes))
 }
 
-// Date returns historical rates for any day since 1999
-func (c *Client) Date(ctx context.Context, t time.Time, attributes ...url.Values) (*Response, error) {
+// At returns historical rates for any day since 1999
+func (c *Client) At(ctx context.Context, t time.Time, attributes ...url.Values) (*Response, error) {
 	return c.get(ctx, "/"+c.date(t), c.query(attributes))
 }
 
@@ -177,4 +180,14 @@ func (c *Client) do(req *http.Request) (*Response, error) {
 	}
 
 	return &r, nil
+}
+
+// Latest foreign exchange reference rates using the DefaultClient
+func Latest(ctx context.Context, attributes ...url.Values) (*Response, error) {
+	return DefaultClient.Latest(ctx, attributes...)
+}
+
+// At returns historical rates for any day since 1999 using the DefaultClient
+func At(ctx context.Context, t time.Time, attributes ...url.Values) (*Response, error) {
+	return DefaultClient.At(ctx, t, attributes...)
 }

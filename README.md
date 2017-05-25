@@ -85,7 +85,7 @@ func main() {
 		fixer.BaseURL("http://exr.mikolajczakluq.com"),
 	)
 
-	resp, err := f.Date(context.Background(), time.Now(),
+	resp, err := f.At(context.Background(), time.Now(),
 		fixer.Base(fixer.GBP),
 		fixer.Symbols(
 			fixer.SEK,

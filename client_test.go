@@ -136,14 +136,14 @@ func TestLatest(t *testing.T) {
 	})
 }
 
-func TestDate(t *testing.T) {
+func TestAt(t *testing.T) {
 	ts, c := testServerAndClient()
 	defer ts.Close()
 
 	t.Run("2012-03-28", func(t *testing.T) {
 		date := time.Date(2012, 3, 28, 0, 0, 0, 0, time.UTC)
 
-		resp, err := c.Date(context.Background(), date)
+		resp, err := c.At(context.Background(), date)
 		if err != nil {
 			t.Fatalf("unexpected error: %v", err)
 		}
@@ -160,7 +160,7 @@ func TestDate(t *testing.T) {
 	t.Run("too-old", func(t *testing.T) {
 		date := time.Date(1999, 12, 31, 0, 0, 0, 0, time.UTC)
 
-		if _, err := c.Date(context.Background(), date); err != ErrUnprocessableEntity {
+		if _, err := c.At(context.Background(), date); err != ErrUnprocessableEntity {
 			t.Fatalf("unexpected error: %v", err)
 		}
 	})
@@ -168,7 +168,7 @@ func TestDate(t *testing.T) {
 	t.Run("not-json", func(t *testing.T) {
 		date := time.Date(2000, 1, 1, 0, 0, 0, 0, time.UTC)
 
-		_, err := c.Date(context.Background(), date)
+		_, err := c.At(context.Background(), date)
 
 		if err == nil {
 			t.Fatalf("expected to get error")
