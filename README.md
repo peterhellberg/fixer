@@ -27,9 +27,7 @@ import (
 )
 
 func main() {
-	f := fixer.NewClient()
-
-	resp, err := f.Latest(context.Background(),
+	resp, err := fixer.Latest(context.Background(),
 		fixer.Base(fixer.SEK),
 		fixer.Symbols(
 			fixer.USD,
@@ -81,11 +79,9 @@ import (
 )
 
 func main() {
-	f := fixer.NewClient(
-		fixer.BaseURL("http://exr.mikolajczakluq.com"),
-	)
+	f := fixer.ExratesClient
 
-	resp, err := f.At(context.Background(), time.Now(),
+  resp, err := f.At(context.Background(), time.Now(),
 		fixer.Base(fixer.GBP),
 		fixer.Symbols(
 			fixer.SEK,
