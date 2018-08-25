@@ -18,7 +18,7 @@ func TestNewClient(t *testing.T) {
 			t.Fatalf("c.httpClient.Timeout = %q, want %q", got, want)
 		}
 
-		if got, want := c.baseURL.String(), "https://api.fixer.io"; got != want {
+		if got, want := c.baseURL.String(), "http://data.fixer.io/api"; got != want {
 			t.Fatalf("c.baseURL.String() = %q, want %q", got, want)
 		}
 
@@ -44,6 +44,16 @@ func TestNewClient(t *testing.T) {
 
 		if got, want := c.baseURL.String(), rawurl; got != want {
 			t.Fatalf("c.baseURL.String() = %q, want %q", got, want)
+		}
+	})
+
+	t.Run("AccessKey", func(t *testing.T) {
+		ak := "foo123"
+
+		c := NewClient(AccessKey(ak))
+
+		if got, want := c.accessKey, ak; got != want {
+			t.Fatalf("c.accessKey = %q, want %q", got, want)
 		}
 	})
 

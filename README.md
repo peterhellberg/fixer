@@ -5,7 +5,11 @@
 [![GoDoc](https://img.shields.io/badge/godoc-reference-blue.svg?style=flat)](https://godoc.org/github.com/peterhellberg/fixer)
 [![License MIT](https://img.shields.io/badge/license-MIT-lightgrey.svg?style=flat)](https://github.com/peterhellberg/fixer#license-mit)
 
-Go client for [Fixer.io](http://fixer.io/) (Foreign exchange rates and currency conversion API)
+Go client for [Fixer.io](https://fixer.io/) (Foreign exchange rates and currency conversion API)
+
+> You need to [register](https://fixer.io/product) for a free access key if using the default Fixer API.
+
+The default client loads its access key from the environment variable `FIXER_ACCESS_KEY`
 
 ## Installation
 
@@ -120,7 +124,7 @@ func encode(v interface{}) {
 
 ## API documentation
 
-<http://fixer.io/>
+<https://fixer.io/documentation>
 
 ## License (MIT)
 

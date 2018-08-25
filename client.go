@@ -7,11 +7,12 @@ import (
 	"io/ioutil"
 	"net/http"
 	"net/url"
+	"os"
 	"time"
 )
 
 // FixerClient is a client configured to use https://api.fixer.io
-var FixerClient = NewClient()
+var FixerClient = NewClient(AccessKey(os.Getenv("FIXER_ACCESS_KEY")))
 
 // ExratesClient is a client configured to use http://exr.mikolajczakluq.com
 var ExratesClient = NewClient(BaseURL("http://exr.mikolajczakluq.com"))
@@ -23,6 +24,7 @@ var DefaultClient = FixerClient
 type Client struct {
 	httpClient *http.Client
 	baseURL    *url.URL
+	accessKey  string
 	userAgent  string
 }
 
@@ -33,9 +35,11 @@ func NewClient(options ...func(*Client)) *Client {
 			Timeout: 20 * time.Second,
 		},
 		baseURL: &url.URL{
-			Scheme: "https",
-			Host:   "api.fixer.io",
+			Scheme: "http",
+			Host:   "data.fixer.io",
+			Path:   "/api",
 		},
+		accessKey: "",
 		userAgent: "fixer/client.go (https://github.com/peterhellberg/fixer)",
 	}
 
@@ -59,6 +63,13 @@ func BaseURL(rawurl string) func(*Client) {
 		if u, err := url.Parse(rawurl); err == nil {
 			c.baseURL = u
 		}
+	}
+}
+
+// AccessKey sets the access key used by the client
+func AccessKey(ak string) func(*Client) {
+	return func(c *Client) {
+		c.accessKey = ak
 	}
 }
 
@@ -141,7 +152,11 @@ func (c *Client) query(attributes []url.Values) url.Values {
 }
 
 func (c *Client) request(ctx context.Context, path string, query url.Values) (*http.Request, error) {
-	rawurl := path
+	rawurl := c.baseURL.Path + path
+
+	if c.accessKey != "" {
+		query.Set("access_key", c.accessKey)
+	}
 
 	if len(query) > 0 {
 		rawurl += "?" + query.Encode()
