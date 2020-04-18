@@ -14,8 +14,8 @@ import (
 // FixerClient is a client configured to use https://api.fixer.io
 var FixerClient = NewClient(AccessKey(os.Getenv("FIXER_ACCESS_KEY")))
 
-// ExratesClient is a client configured to use http://exr.mikolajczakluq.com
-var ExratesClient = NewClient(BaseURL("http://exr.mikolajczakluq.com"))
+// ExratesClient is a client configured to use https://api.exchangeratesapi.io
+var ExratesClient = NewClient(BaseURL("https://api.exchangeratesapi.io"))
 
 // DefaultClient is the default client for the Foreign exchange rates and currency conversion API
 var DefaultClient = FixerClient

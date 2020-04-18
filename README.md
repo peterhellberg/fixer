@@ -68,7 +68,7 @@ func encode(v interface{}) {
 }
 ```
 
-**Using [goexrates](http://goexrates.mikolajczakluq.com/) instead**
+**Using the [Foreign exchange rates API](https://exchangeratesapi.io/) instead**
 
 ```go
 package main
@@ -110,14 +110,14 @@ func encode(v interface{}) {
 ```json
 {
  "base": "GBP",
- "date": "2017-05-24T00:00:00Z",
+ "date": "2020-04-17T00:00:00Z",
  "rates": {
-  "NOK": 10.86901,
-  "SEK": 11.28307
+  "NOK": 12.9739704293,
+  "SEK": 12.4799374554
  },
  "links": {
-  "base": "http://exr.mikolajczakluq.com",
-  "self": "http://exr.mikolajczakluq.com/2017-05-25?base=GBP&symbols=NOK%2CSEK"
+  "base": "https://api.exchangeratesapi.io",
+  "self": "https://api.exchangeratesapi.io/2020-04-18?base=GBP&symbols=NOK%2CSEK"
  }
 }
 ```
