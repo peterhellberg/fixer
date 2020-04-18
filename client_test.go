@@ -38,7 +38,7 @@ func TestNewClient(t *testing.T) {
 	})
 
 	t.Run("BaseURL", func(t *testing.T) {
-		rawurl := "http://exr.mikolajczakluq.com"
+		rawurl := "https://api.exchangeratesapi.io"
 
 		c := NewClient(BaseURL(rawurl))
 
@@ -201,7 +201,7 @@ func TestGet(t *testing.T) {
 			t.Fatalf("expected to get error")
 		}
 
-		if got, want := err.Error(), "parse :/: missing protocol scheme"; got != want {
+		if got, want := err.Error(), "parse \":/\": missing protocol scheme"; got != want {
 			t.Fatalf("err.Error() = %q, want %q", got, want)
 		}
 	})
