@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"net/url"
+	"strings"
 	"testing"
 	"time"
 )
@@ -201,7 +202,10 @@ func TestGet(t *testing.T) {
 			t.Fatalf("expected to get error")
 		}
 
-		if got, want := err.Error(), "parse \":/\": missing protocol scheme"; got != want {
+		got := err.Error()
+		want := "missing protocol scheme"
+
+		if !strings.Contains(err.Error(), want) {
 			t.Fatalf("err.Error() = %q, want %q", got, want)
 		}
 	})
